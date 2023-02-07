@@ -47,4 +47,52 @@ export class ProductController {
             }
         }
     }
+
+    public editProduct = async (req: Request, res: Response) => {
+        try {
+
+            const input = {
+                idToEdit: req.params.id,
+                newId: req.body.id,
+                newName: req.body.name,
+                newPrice: req.body.price,
+                newCreatedAt: req.body.createdAt
+            }
+
+            const productBusiness = new ProductBusiness()
+            const output = await productBusiness.editProduct(input)
+
+            res.status(200).send(output)
+        } catch (error) {
+            console.log(error)
+
+            if (error instanceof BaseError) {
+                res.status(error.statusCode).send(error.message)
+            } else {
+                res.status(500).send("Erro inesperado")
+            }
+        }
+    }
+
+    public deleteProduct = async (req: Request, res: Response) => {
+        try {
+
+            const input = {
+                idToDelete: req.params.id
+            }
+
+            const productBusiness = new ProductBusiness()
+            const output = await productBusiness.deleteProduct(input)
+
+            res.status(200).send(output)
+        } catch (error) {
+            console.log(error)
+
+            if (error instanceof BaseError) {
+                res.status(error.statusCode).send(error.message)
+            } else {
+                res.status(500).send("Erro inesperado")
+            }
+        }
+    }
 }

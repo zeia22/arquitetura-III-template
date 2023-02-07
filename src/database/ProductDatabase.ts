@@ -1,3 +1,4 @@
+import { Product } from "../models/Product";
 import { ProductDB } from "../types";
 import { BaseDatabase } from "./BaseDatabase";
 
@@ -32,5 +33,19 @@ export class ProductDatabase extends BaseDatabase {
         await BaseDatabase
             .connection(ProductDatabase.TABLE_PRODUCTS)
             .insert(newProductDB)
+    }
+
+    public async updateProduct(productDB: ProductDB) {
+        await BaseDatabase
+            .connection(ProductDatabase.TABLE_PRODUCTS)
+            .update(productDB)
+            .where({ id: productDB.id })
+    }
+
+    public async deleteProductById(id: string) {
+        await BaseDatabase
+            .connection(ProductDatabase.TABLE_PRODUCTS)
+            .delete()
+            .where({ id })
     }
 }

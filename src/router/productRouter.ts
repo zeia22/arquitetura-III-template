@@ -7,3 +7,5 @@ const productController = new ProductController()
 
 productRouter.get("/", productController.getProducts)
 productRouter.post("/", productController.createProduct)
+productRouter.put("/:id", productController.editProduct)
+productRouter.delete("/:id", productController.deleteProduct)
