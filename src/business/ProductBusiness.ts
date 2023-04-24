@@ -79,41 +79,34 @@ export class ProductBusiness {
   public editProduct = async (input: any) => {
     const {
       idToEdit,
-      newId,
-      newName,
-      newPrice,
-      newCreatedAt
+      id,
+      name,
+      price
     } = input
 
-    if (newId !== undefined) {
-      if (typeof newId !== "string") {
+    if (id !== undefined) {
+      if (typeof id !== "string") {
         throw new BadRequestError("'id' deve ser string")
       }
     }
 
-    if (newName !== undefined) {
-      if (typeof newName !== "string") {
+    if (name !== undefined) {
+      if (typeof name !== "string") {
         throw new BadRequestError("'name' deve ser string")
       }
 
-      if (newName.length < 2) {
+      if (name.length < 2) {
         throw new BadRequestError("'name' deve possuir pelo menos 2 caracteres")
       }
     }
 
-    if (newPrice !== undefined) {
-      if (typeof newPrice !== "number") {
+    if (price !== undefined) {
+      if (typeof price !== "number") {
         throw new BadRequestError("'price' deve ser number")
       }
 
-      if (newPrice <= 0) {
+      if (price <= 0) {
         throw new BadRequestError("'price' não pode ser zero ou negativo")
-      }
-    }
-
-    if (newCreatedAt !== undefined) {
-      if (typeof newCreatedAt !== "string") {
-        throw new BadRequestError("'createdAt' deve ser string")
       }
     }
 
@@ -131,10 +124,9 @@ export class ProductBusiness {
       productToEditDB.created_at
     )
 
-    newId && product.setId(newId)
-    newName && product.setName(newName)
-    newPrice && product.setPrice(newPrice)
-    newCreatedAt && product.setCreatedAt(newCreatedAt)
+    id && product.setId(id)
+    name && product.setName(name)
+    price && product.setPrice(price)
 
     const updatedProductDB: ProductDB = {
       id: product.getId(),

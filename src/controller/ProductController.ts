@@ -53,10 +53,9 @@ export class ProductController {
 
       const input = {
         idToEdit: req.params.id,
-        newId: req.body.id,
-        newName: req.body.name,
-        newPrice: req.body.price,
-        newCreatedAt: req.body.createdAt
+        id: req.body.id,
+        name: req.body.name,
+        price: req.body.price
       }
 
       const productBusiness = new ProductBusiness()

@@ -5,12 +5,6 @@ export interface ProductDB {
   created_at: string
 }
 
-export interface ProductDBPost {
-  id: string,
-  name: string,
-  price: number
-}
-
 export class Product {    
     constructor(
         private id: string,
