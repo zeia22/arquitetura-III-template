@@ -1,51 +1,50 @@
-import { Product } from "../models/Product";
-import { ProductDB } from "../types";
+import { ProductDB } from "../models/Product";
 import { BaseDatabase } from "./BaseDatabase";
 
 export class ProductDatabase extends BaseDatabase {
-    public static TABLE_PRODUCTS = "products"
+  public static TABLE_PRODUCTS = "products"
 
-    public async findProducts(q: string | undefined) {
-        if (q) {
-            const result: ProductDB[] = await BaseDatabase
-                .connection(ProductDatabase.TABLE_PRODUCTS)
-                .where("name", "LIKE", `%${q}%`)
+  public async insertProduct(newProductDB: ProductDB) {
+    await BaseDatabase
+      .connection(ProductDatabase.TABLE_PRODUCTS)
+      .insert(newProductDB)
+  }
 
-            return result
+  public async findProducts(q: string | undefined) {
+    if (q) {
+      const result: ProductDB[] = await BaseDatabase
+        .connection(ProductDatabase.TABLE_PRODUCTS)
+        .where("name", "LIKE", `%${q}%`)
 
-        } else {
-            const result: ProductDB[] = await BaseDatabase
-                .connection(ProductDatabase.TABLE_PRODUCTS)
+      return result
 
-            return result
-        }
+    } else {
+      const result: ProductDB[] = await BaseDatabase
+        .connection(ProductDatabase.TABLE_PRODUCTS)
+
+      return result
     }
+  }
 
-    public async findProductById(id: string) {
-        const [ productDB ]: ProductDB[] | undefined[] = await BaseDatabase
-            .connection(ProductDatabase.TABLE_PRODUCTS)
-            .where({ id })
+  public async findProductById(id: string) {
+    const [productDB]: ProductDB[] | undefined[] = await BaseDatabase
+      .connection(ProductDatabase.TABLE_PRODUCTS)
+      .where({ id })
 
-        return productDB
-    }
+    return productDB
+  }
 
-    public async insertProduct(newProductDB: ProductDB) {
-        await BaseDatabase
-            .connection(ProductDatabase.TABLE_PRODUCTS)
-            .insert(newProductDB)
-    }
+  public async updateProduct(idToEdit: string, productDB: ProductDB) {
+    await BaseDatabase
+      .connection(ProductDatabase.TABLE_PRODUCTS)
+      .update(productDB)
+      .where({ id: idToEdit })
+  }
 
-    public async updateProduct(idToEdit: string, productDB: ProductDB) {
-        await BaseDatabase
-            .connection(ProductDatabase.TABLE_PRODUCTS)
-            .update(productDB)
-            .where({ id: idToEdit })
-    }
-
-    public async deleteProductById(idToDelete: string) {
-        await BaseDatabase
-            .connection(ProductDatabase.TABLE_PRODUCTS)
-            .delete()
-            .where({ id: idToDelete })
-    }
+  public async deleteProductById(idToDelete: string) {
+    await BaseDatabase
+      .connection(ProductDatabase.TABLE_PRODUCTS)
+      .delete()
+      .where({ id: idToDelete })
+  }
 }
