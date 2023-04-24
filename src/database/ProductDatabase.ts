@@ -35,17 +35,17 @@ export class ProductDatabase extends BaseDatabase {
             .insert(newProductDB)
     }
 
-    public async updateProduct(productDB: ProductDB) {
+    public async updateProduct(idToEdit: string, productDB: ProductDB) {
         await BaseDatabase
             .connection(ProductDatabase.TABLE_PRODUCTS)
             .update(productDB)
-            .where({ id: productDB.id })
+            .where({ id: idToEdit })
     }
 
-    public async deleteProductById(id: string) {
+    public async deleteProductById(idToDelete: string) {
         await BaseDatabase
             .connection(ProductDatabase.TABLE_PRODUCTS)
             .delete()
-            .where({ id })
+            .where({ id: idToDelete })
     }
 }

@@ -114,8 +114,6 @@ export class ProductBusiness {
             if (typeof newCreatedAt !== "string") {
                 throw new BadRequestError("'createdAt' deve ser string")
             }
-
-            // outras validações de data
         }
 
         const productDatabase = new ProductDatabase()
@@ -144,7 +142,7 @@ export class ProductBusiness {
             created_at: product.getCreatedAt()
         }
 
-        await productDatabase.updateProduct(updatedProductDB)
+        await productDatabase.updateProduct(idToEdit, updatedProductDB)
 
         const output = {
             message: "Produto editado com sucesso",
