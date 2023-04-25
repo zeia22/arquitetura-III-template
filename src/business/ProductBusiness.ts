@@ -52,7 +52,12 @@ export class ProductBusiness {
 
     const output = {
       message: "Produto registrado com sucesso",
-      product: newProduct
+      product: {
+        id: newProduct.getId(),
+        name: newProduct.getName(),
+        price: newProduct.getPrice(),
+        createdAt: newProduct.getCreatedAt()
+      }
     }
 
     return output
@@ -71,10 +76,15 @@ export class ProductBusiness {
       productDB.created_at
     ))
 
-    return products
+    const output = products.map((product) => ({
+      id: product.getId(),
+      name: product.getName(),
+      price: product.getPrice(),
+      created_at: product.getCreatedAt()
+    }))
+
+    return output
   }
-
-
 
   public editProduct = async (input: any) => {
     const {
@@ -139,7 +149,12 @@ export class ProductBusiness {
 
     const output = {
       message: "Produto editado com sucesso",
-      product: product
+      product: {
+        id: product.getId(),
+        name: product.getName(),
+        price: product.getPrice(),
+        createdAt: product.getCreatedAt()
+      }
     }
 
     return output
@@ -155,10 +170,23 @@ export class ProductBusiness {
       throw new NotFoundError("'id' para deletar não existe")
     }
 
+    const product = new Product(
+      productToDeleteDB.id,
+      productToDeleteDB.name,
+      productToDeleteDB.price,
+      productToDeleteDB.created_at
+    )
+
     await productDatabase.deleteProductById(productToDeleteDB.id)
 
     const output = {
-      message: "Produto deletado com sucesso"
+      message: "Produto deletado com sucesso",
+      product: {
+        id: product.getId(),
+        name: product.getName(),
+        price: product.getPrice(),
+        createdAt: product.getCreatedAt()
+      }
     }
 
     return output
