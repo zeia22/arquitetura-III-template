@@ -80,7 +80,7 @@ export class ProductBusiness {
       id: product.getId(),
       name: product.getName(),
       price: product.getPrice(),
-      created_at: product.getCreatedAt()
+      createdAt: product.getCreatedAt()
     }))
 
     return output
